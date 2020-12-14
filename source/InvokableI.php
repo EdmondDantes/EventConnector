@@ -10,7 +10,7 @@ interface InvokableI
 {
     /**
      * @param   EventI      $event      Event
-     * @param   null        $data       Data
+     * @param   mixed       $data       Data
      *
      * @return  mixed
      */

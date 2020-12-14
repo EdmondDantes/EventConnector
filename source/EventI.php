@@ -11,14 +11,14 @@ interface EventI
      *
      * @return      string
      */
-    public function event_sysname();
-
+    public function event_sysname(): string;
+    
     /**
      * Дополнительные параметры события.
      *
      * @return      array
      */
-    public function event_params();
+    public function event_params(): array;
 
     /**
      * Объект, который создал это событие (объект владелец)

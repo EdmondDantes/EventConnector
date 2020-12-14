@@ -24,9 +24,9 @@ interface ConnectorPointI
      * не был определён, он инициализируется. В этом случае
      * метод всегда вернёт ConnectorI.
      *
-     * @param       ConnectorI      $connector      Конектор
+     * @param       ConnectorI|null         $connector Конектор
      *
      * @return      ConnectorI|null
      */
-    public function connector(ConnectorI $connector = null);
+    public function connector(ConnectorI $connector = null): ?ConnectorI;
 }
