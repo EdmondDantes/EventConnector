@@ -29,13 +29,13 @@ class Chronos           implements ChronosI
      *
      * @var ConnectorI[]
      */
-    protected $quantums = [];
+    protected array $quantums = [];
 
     /**
      * Текущий квант времени
-     * @var string
+     * @var string|null
      */
-    protected $current;
+    protected ?string $current = null;
 
     /**
      * Флаг, который разрешает изменять кванты
@@ -43,13 +43,13 @@ class Chronos           implements ChronosI
      *
      * @var boolean
      */
-    protected $is_modify;
+    protected bool $is_modify;
 
     /**
      * Flag equal true if Chronos executing now
      * @var bool
      */
-    protected $is_executing = false;
+    protected bool $is_executing = false;
 
     /**
      * Конструктор квантов. Метод принимает список имён квантов.
@@ -57,7 +57,7 @@ class Chronos           implements ChronosI
      * @param       array       $quantums           Список квантов
      * @param       boolean     $is_modify          Флаг модификации
      */
-    public function __construct(array $quantums = [], $is_modify = true)
+    public function __construct(array $quantums = [], bool $is_modify = true)
     {
         $this->is_modify          = $is_modify;
 
@@ -67,7 +67,7 @@ class Chronos           implements ChronosI
         }
     }
 
-    public function is_quantum_possible($name, $is_rise = BaseExceptionI::MUTE)
+    public function is_quantum_possible(string $name, bool $is_rise = BaseExceptionI::MUTE): bool
     {
         try
         {
@@ -97,24 +97,24 @@ class Chronos           implements ChronosI
         return true;
     }
 
-    public function is_executing()
+    public function is_executing(): bool
     {
         return $this->is_executing;
     }
 
-    public function quantum($name)
+    public function quantum(string $name): ConnectorI
     {
         $this->is_quantum_possible($name, BaseExceptionI::RISE);
 
         return $this->quantums[$name];
     }
 
-    public function current_quantum()
+    public function current_quantum(): ?string
     {
         return $this->current;
     }
 
-    public function add_quantum($name, $after = ConnectorI::POS_END)
+    public function add_quantum($name, $after = ConnectorI::POS_END): ConnectorI
     {
         if(!$this->is_modify)
         {
@@ -172,7 +172,7 @@ class Chronos           implements ChronosI
         return $connector;
     }
 
-    public function execute(EventI $event)
+    public function execute(EventI $event): void
     {
         if(!is_null($this->current))
         {
@@ -202,7 +202,7 @@ class Chronos           implements ChronosI
         }
     }
 
-    public function execute_next(EventI $event)
+    public function execute_next(EventI $event): bool
     {
         if($this->is_executing)
         {
@@ -235,14 +235,14 @@ class Chronos           implements ChronosI
         return true;
     }
 
-    public function reset_chronos()
+    public function reset_chronos(): static
     {
         $this->current      = null;
 
         return $this;
     }
 
-    public function is_modify()
+    public function is_modify(): bool
     {
         return $this->is_modify;
     }
@@ -253,7 +253,7 @@ class Chronos           implements ChronosI
      *
      * @return string|null
      */
-    protected function get_next_quantum()
+    protected function get_next_quantum(): ?string
     {
         if(is_null($this->current))
         {

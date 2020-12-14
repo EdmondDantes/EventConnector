@@ -15,30 +15,30 @@ class XConnector                implements ConnectorI
      * count of nesting calls
      * @var int
      */
-    static protected $nesting_call_count = 0;
+    static protected int $nesting_call_count = 0;
 
     /**
      * @var callable[]
      */
-    protected $stack;
+    protected array $stack;
 
     /**
      * Максимальная вложенность вызова самих себя.
      * @var int
      */
-    protected $max_nesting_call = 16;
+    protected int $max_nesting_call     = 16;
 
     public function __construct()
     {
         $this->stack            = [];
     }
 
-    static public function nesting_call_counter()
+    static public function nesting_call_counter(): int
     {
         return self::$nesting_call_count;
     }
 
-    public function nesting_call_count()
+    public function nesting_call_count(): int
     {
         return self::nesting_call_counter();
     }
@@ -182,7 +182,7 @@ class XConnector                implements ConnectorI
 
         return null;
     }
-
+    
     /**
      * @return  mixed|void
      */

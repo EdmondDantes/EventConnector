@@ -11,21 +11,21 @@ interface ChronosI
     /**
      * Метод вернёт TRUE, если квант возможен к использованию.
      *
-     * @param       string      $name       Имя кванта
-     * @param       boolean     $is_rise    Флаг выброса исключений
+     * @param       string          $name    Имя кванта
+     * @param       boolean         $is_rise Флаг выброса исключений
      *
      * @return      boolean
      *
-     * @throws      UnexpectedValue
-     * @throws      \Exception
+     * @throws UnexpectedValue
+     * @throws \Exception
      */
-    public function is_quantum_possible($name, $is_rise = BaseExceptionI::MUTE);
-
+    public function is_quantum_possible(string $name, bool $is_rise = BaseExceptionI::MUTE): bool;
+    
     /**
      * @return      bool
      */
-    public function is_executing();
-
+    public function is_executing(): bool;
+    
     /**
      * Метод возвращает квант, если он ещё не был выполнен.
      *
@@ -34,20 +34,20 @@ interface ChronosI
      * Если квант уже использован, или используется сейчас
      * метод выбросит исключение.
      *
-     * @param       string              $name       Имя кванта
+     * @param       string          $name           Имя кванта
      *
      * @return      ConnectorI                      Коннектор с обработчиками
      *
-     * @throws      UnexpectedValue                 Если квант не найден или уже выполнен
+     * @throws UnexpectedValue Если квант не найден или уже выполнен
      */
-    public function quantum($name);
-
+    public function quantum(string $name): ConnectorI;
+    
     /**
      * Метод вернёт имя текущего квант, который выполняется.
      *
-     * @return string
+     * @return      string|null
      */
-    public function current_quantum();
+    public function current_quantum(): ?string;
 
     /**
      * Метод добавляет квант, и возвращает его.
@@ -61,7 +61,7 @@ interface ChronosI
      * @throws      UnexpectedMethodMode
      * @throws      UnexpectedValue
      */
-    public function add_quantum($name, $after = ConnectorI::POS_END);
+    public function add_quantum(string $name, string|bool $after = ConnectorI::POS_END): ConnectorI;
 
     /**
      * Выполнить все кванты
@@ -70,7 +70,7 @@ interface ChronosI
      *
      * @throws      UnexpectedMethodMode                Попытка вызвать метод после execute_next()
      */
-    public function execute(EventI $event);
+    public function execute(EventI $event): void;
 
     /**
      * Метод позволяет выполнить только следующий активный квант.
@@ -95,19 +95,19 @@ interface ChronosI
      *
      * @return      boolean                     Метод вернёт false, если кванты закончились.
      */
-    public function execute_next(EventI $event);
+    public function execute_next(EventI $event): bool;
 
     /**
      * Принудительный сброс квантов
      *
      * @return      ChronosI
      */
-    public function reset_chronos();
+    public function reset_chronos(): static;
 
     /**
      * Метод вернёт true, если Chronos можно изменять
      *
      * @return      boolean
      */
-    public function is_modify();
+    public function is_modify(): bool;
 }
