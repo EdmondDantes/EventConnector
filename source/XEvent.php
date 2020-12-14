@@ -9,11 +9,11 @@ class XEvent implements EventI
     /**
      * @var string
      */
-    protected $sysname;
+    protected string $sysname;
     /**
      * @var array
      */
-    protected $params;
+    protected array $params;
     /**
      * @var object
      */
@@ -30,19 +30,19 @@ class XEvent implements EventI
      * @param       array       $params         Параметры
      * @param       object      $owner          Объект, который создал событие
      */
-    public function __construct($sysname, array $params = null, $owner = null)
+    public function __construct(string $sysname, array $params = null, $owner = null)
     {
         $this->sysname          = $sysname;
-        $this->params           = $params;
+        $this->params           = $params ?? [];
         $this->owner            = $owner;
     }
 
-    public function event_sysname()
+    public function event_sysname(): string
     {
         return $this->sysname;
     }
 
-    public function event_params()
+    public function event_params(): array
     {
         return $this->params;
     }
